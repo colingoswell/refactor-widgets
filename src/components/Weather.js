@@ -62,7 +62,9 @@ const Weather = () => {
   const [weather, setWeather] = useState(null);
 
 
-
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(pollWeather);
+  }, []);
 
   const pollWeather = (location) => {
     let url = 'http://api.openweathermap.org/data/2.5/weather?';
@@ -82,22 +84,20 @@ const Weather = () => {
       .then((weather) => setWeather(weather));
   }
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(pollWeather);
-  }, []);
-
-  console.log(weather)
 
 
 
-  // let content = <div className='loading'>loading weather...</div>;
-  // if (weather) {
-  //   const temp = (weather.main.temp - 273.15) * 1.8 + 32;
-  //   content = <div>
-  //     <p>{weather.name}</p>
-  //     <p>{temp.toFixed(1)} degrees</p>
-  //   </div>;
-  // }
+
+
+
+  let content = <div className='loading'>loading weather...</div>;
+  if (weather) {
+    const temp = (weather.main.temp - 273.15) * 1.8 + 32;
+    content = <div>
+      <p>{weather.name}</p>
+      <p>{temp.toFixed(1)} degrees</p>
+    </div>;
+  }
 
 
 
@@ -106,7 +106,7 @@ const Weather = () => {
     <section>
       <h1>Weather</h1>
       <div className='weather'>
-        {/* {content} */}
+        {content}
       </div>
     </section>
   )
